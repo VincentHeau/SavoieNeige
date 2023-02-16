@@ -7,8 +7,8 @@ const width = 1500, height = 1000;
 const map = d3.geoPath();
 
 const projection = d3.geoMercator()
-	.center([-1.425, 46.198])
-	.scale(290000)
+	.center([6.506039750689418, 45.82235166546823])
+	.scale(10000)
 	.translate([width/2, height/2]);
 
 map.projection(projection);
@@ -25,13 +25,31 @@ const svg = d3.select("#carte")
 /*********************************** AJOUTER DES OBJETS SUR LES CARTES *****/
 /***************************************************************************/
 
-// Ajout d'un groupe (communes) au SVG (svg)
 
-const communes = svg.append("g");
 
-communes.selectAll("path")
+// Ajout d'un groupe (station) au SVG (svg)
+
+const stations = svg.append("g");
+
+stations.selectAll("path")
 	// La variable geojson_communes est créée dans le fichier JS qui contient le GeoJSON
-	.data(geojson_communes.features)
+	.data(geojson_stations.features)
+	.enter()
+	.append("path")
+	.attr("d", map)
+	// Sémiologie (par défaut) des objets
+	.style("fill", "black")
+	.style("stroke-width", 1);
+	
+
+
+// Ajout d'un groupe (depts) au SVG (svg)
+
+const depts = svg.append("g");
+
+depts.selectAll("path")
+	// La variable geojson_communes est créée dans le fichier JS qui contient le GeoJSON
+	.data(geojson_depts.features)
 	.enter()
 	.append("path")
 	.attr("d", map)
