@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>CartoDyn - Template 2</title>
+		<!-- FAVICON + CSS -->
+		<link href="img/carthageo.png" rel="icon">
+		<link href="https://fonts.googleapis.com/css?family=Bitter&display=swap" rel="stylesheet">
+		<link href="css/reset.css" rel="stylesheet">
+		<link href="css/main.css" rel="stylesheet">
+	</head>
+	<body>
+		<h1>L'Île de Ré à bicyclette</h1>
+		<div id="carte"></div>
+		<div id="pois"></div>
+	</body>
+	<!-- LIBRAIRIES JAVASCRIPT D3 & JQUERY -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<script src="https://d3js.org/d3-geo-projection.v4.min.js"></script>
+	<script src="https://d3js.org/d3-tile.v0.0.min.js"></script>
+	<!-- DONNEES (GEOJSON, WGS84) -->
+	<script src="js/communes.js"></script>
+	<script src="js/villes.js"></script>
+	<script src="js/roads.js"></script>
+	<!-- PROGRAMME JAVASCRIPT -->
+	<script src="js/main.js"></script>
+</html>
