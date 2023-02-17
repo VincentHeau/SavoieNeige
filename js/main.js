@@ -4,6 +4,89 @@
 
 const width = 1500, height = 1000;
 
+///  Création du graphique en bar
+var ctx = document.getElementById('myChart');
+
+
+function creation_graph(x){
+
+	var dict = {};
+	for (var i = 0; i < geojson_stations.features.length; i++) {
+		var key = geojson_stations.features[i].properties.Nom;
+		var val = geojson_stations.features[i].properties[x];
+		dict[key] = val;
+	}
+
+	// Fonction pour trier
+	function sort_object(obj) {
+		items = Object.keys(obj).map(function(key) {
+			return [key, obj[key]];
+		});
+		items.sort(function(first, second) {
+			return second[1] - first[1];
+		});
+		sorted_obj={}
+		$.each(items, function(k, v) {
+			use_key = v[0]
+			use_value = v[1]
+			sorted_obj[use_key] = use_value
+		})
+		return(sorted_obj)
+	} 
+
+
+	// On tri le dictionnaire
+	var sortedArrayOfObj = sort_object(dict);
+
+
+	// On crée les listes triées
+	newArrayLabel = [];
+	newArrayData = [];
+
+	for (const sta in sortedArrayOfObj) {
+		newArrayLabel.push(`${sta}`);
+		newArrayData.push(`${sortedArrayOfObj[sta]}`);
+	}
+	
+
+	// Création du graph
+
+	var config = {
+		type: 'line',
+		data: {
+		labels: newArrayLabel,
+		datasets: [{
+			label: 'Graph Line',
+			data: newArrayData,
+			backgroundColor: 'rgba(0, 119, 204, 0.3)'
+		}]
+		}
+	};
+	
+	try{ graph2.destroy()}
+	catch{}
+	graph2 = new Chart(ctx, {
+		type: 'bar',
+		data: {
+		labels: newArrayLabel,
+		datasets: [{
+			label: '# of Votes',
+			data: newArrayData,
+			borderWidth: 1
+		}]
+		},
+		options: {
+		scales: {
+			y: {
+			beginAtZero: true
+			}
+		}
+		}
+	});
+}
+
+creation_graph("h2022");
+
 const map = d3.geoPath();
 
 const projection = d3.geoMercator()
@@ -20,6 +103,15 @@ const svg = d3.select("#carte")
 	.attr("id", "svg1")
 	.attr("width", "100%")
 	.attr("height", "100%");
+
+/// Création de l'animation
+
+$(".bouton").click(function() {
+	console.log("lancer l'animation");
+    creation_graph("h1996");
+    creation_stations("h1996");
+	//$("#curseur").setCursorPosition(1996);
+  });
 
 /***************************************************************************/
 /*********************************** AJOUTER DES OBJETS SUR LES CARTES *****/
@@ -61,8 +153,9 @@ svg.selectAll("image")
 
 const stations = svg.append("g").attr("id", "stations");
 var x = "h2021"
-//console.log(geojson_stations.features[0]);
-stations.selectAll("circle")
+
+function creation_stations(x){
+	stations.selectAll("circle")
     .data(geojson_stations.features)
     .join("circle")
     .attr("cx", d => projection(d.geometry.coordinates)[0])
@@ -71,22 +164,22 @@ stations.selectAll("circle")
     .attr("fill-opacity", 0.5)
     .attr("fill", "black")
     .attr("stroke", "red");
+}
+creation_stations("h2022");
+
 // Ajout d'un groupe (villes) au SVG (svg)
 
 
-// Logs the value when the user has released the slider
+// Au mouvement du curseur
 $('#curseur').on('change', function(){
+
 	x = "h" + $('#curseur').val().toString();
 
-	stations.selectAll("circle")
-		.data(geojson_stations.features)
-		.join("circle")
-		.attr("cx", d => projection(d.geometry.coordinates)[0])
-		.attr("cy", d => projection(d.geometry.coordinates)[1])
-		.attr("r", r => 15*r.properties[x])
-		.attr("fill-opacity", 0.5)
-		.attr("fill", "black")
-		.attr("stroke", "red");
+	// Mise à jour des cercles
+	creation_stations(x)
+
+	// Mise à jour du graphe 2
+	creation_graph(x);
 });
 
 
@@ -209,52 +302,7 @@ labelsPois.selectAll("text")
 		return d.nom
 	});
 
-	///  Création du graphique en bar
 
-const ctx = document.getElementById('myChart');
-const arrayRange = (start, stop, step) =>
-    Array.from(
-    { length: (stop - start) / step + 1 },
-    (value, index) => "Février "+ (start + index * step).toString()
-    );
-let range = arrayRange(1996,2022, 1);
+	// Création dictionnaire des stations avec hauteurs de neige
 
 
-var labels =[];
-var valeurs = []
- for (var i = 0; i < geojson_stations.features.length; i++) {
-	labels.push(geojson_stations.features[i].properties.Nom)
-	valeurs.push(geojson_stations.features[i].properties.h2020);
-  }
-
- 
-
- var config = {
-	type: 'line',
-	data: {
-	   labels: labels,
-	   datasets: [{
-		  label: 'Graph Line',
-		  data: valeurs,
-		  backgroundColor: 'rgba(0, 119, 204, 0.3)'
-	   }]
-	}
- };
-  new Chart(ctx, {
-    type: 'bar',
-    data: {
-      labels: labels,
-      datasets: [{
-        label: '# of Votes',
-        data: valeurs,
-        borderWidth: 1
-      }]
-    },
-    options: {
-      scales: {
-        y: {
-          beginAtZero: true
-        }
-      }
-    }
-  });
