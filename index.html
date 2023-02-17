@@ -13,8 +13,14 @@
 
 	<body>
 		<h1>L'Île de Ré à bicyclette</h1>
-		<div id="carte"></div>
-		<div id="pois"></div>
+		<div id="carte">
+		</div>
+		
+		<input id="curseur" min="1996" max="2022" value="2022" step="1"
+		class="custom-slider custom-slider-bullet" type="range">
+		<div>
+			<canvas id="myChart"></canvas>
+		  </div>
 	</body>
 
 
@@ -23,6 +29,7 @@
 	<script src="https://d3js.org/d3.v7.min.js"></script>
 	<script src="https://d3js.org/d3-geo-projection.v4.min.js"></script>
 	<script src="https://d3js.org/d3-tile.v0.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<!-- DONNEES (GEOJSON, WGS84) -->
 	<script src="js/communes.js"></script>
 	<script src="js/villes.js"></script>

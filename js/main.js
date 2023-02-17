@@ -59,8 +59,8 @@ svg.selectAll("image")
 
 // Ajout d'un groupe (station) au SVG (svg)
 
-const stations = svg.append("g");
-var x = "h2020"
+const stations = svg.append("g").attr("id", "stations");
+var x = "h2021"
 //console.log(geojson_stations.features[0]);
 stations.selectAll("circle")
     .data(geojson_stations.features)
@@ -72,6 +72,24 @@ stations.selectAll("circle")
     .attr("fill", "black")
     .attr("stroke", "red");
 // Ajout d'un groupe (villes) au SVG (svg)
+
+
+// Logs the value when the user has released the slider
+$('#curseur').on('change', function(){
+	x = "h" + $('#curseur').val().toString();
+
+	stations.selectAll("circle")
+		.data(geojson_stations.features)
+		.join("circle")
+		.attr("cx", d => projection(d.geometry.coordinates)[0])
+		.attr("cy", d => projection(d.geometry.coordinates)[1])
+		.attr("r", r => 15*r.properties[x])
+		.attr("fill-opacity", 0.5)
+		.attr("fill", "black")
+		.attr("stroke", "red");
+});
+
+
 
 const villes = svg.append("g");
 
@@ -190,3 +208,53 @@ labelsPois.selectAll("text")
 	.text(function(d){
 		return d.nom
 	});
+
+	///  Création du graphique en bar
+
+const ctx = document.getElementById('myChart');
+const arrayRange = (start, stop, step) =>
+    Array.from(
+    { length: (stop - start) / step + 1 },
+    (value, index) => "Février "+ (start + index * step).toString()
+    );
+let range = arrayRange(1996,2022, 1);
+
+
+var labels =[];
+var valeurs = []
+ for (var i = 0; i < geojson_stations.features.length; i++) {
+	labels.push(geojson_stations.features[i].properties.Nom)
+	valeurs.push(geojson_stations.features[i].properties.h2020);
+  }
+
+ 
+
+ var config = {
+	type: 'line',
+	data: {
+	   labels: labels,
+	   datasets: [{
+		  label: 'Graph Line',
+		  data: valeurs,
+		  backgroundColor: 'rgba(0, 119, 204, 0.3)'
+	   }]
+	}
+ };
+  new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: labels,
+      datasets: [{
+        label: '# of Votes',
+        data: valeurs,
+        borderWidth: 1
+      }]
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true
+        }
+      }
+    }
+  });
