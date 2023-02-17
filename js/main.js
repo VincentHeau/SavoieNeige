@@ -7,8 +7,8 @@ const width = 1500, height = 1000;
 const map = d3.geoPath();
 
 const projection = d3.geoMercator()
-	.center([6.506039750689418, 45.82235166546823])
-	.scale(10000)
+	.center([5.7, 45.9])
+	.scale(20000)
 	//.translate([width/2, height/2]);
 
 map.projection(projection);
