@@ -9,7 +9,7 @@ const map = d3.geoPath();
 const projection = d3.geoMercator()
 	.center([6.506039750689418, 45.82235166546823])
 	.scale(10000)
-	.translate([width/2, height/2]);
+	//.translate([width/2, height/2]);
 
 map.projection(projection);
 
@@ -24,23 +24,6 @@ const svg = d3.select("#carte")
 /***************************************************************************/
 /*********************************** AJOUTER DES OBJETS SUR LES CARTES *****/
 /***************************************************************************/
-
-
-
-// Ajout d'un groupe (station) au SVG (svg)
-
-const stations = svg.append("g");
-
-stations.selectAll("path")
-	// La variable geojson_communes est créée dans le fichier JS qui contient le GeoJSON
-	.data(geojson_stations.features)
-	.enter()
-	.append("path")
-	.attr("d", map)
-	// Sémiologie (par défaut) des objets
-	.style("fill", "black")
-	.style("stroke-width", 1);
-	
 
 
 // Ajout d'un groupe (depts) au SVG (svg)
@@ -73,6 +56,21 @@ svg.selectAll("image")
 	.attr("width", tiles.scale)
 	.attr("height", tiles.scale);
 
+
+// Ajout d'un groupe (station) au SVG (svg)
+
+const stations = svg.append("g");
+var x = "h2020"
+//console.log(geojson_stations.features[0]);
+stations.selectAll("circle")
+    .data(geojson_stations.features)
+    .join("circle")
+    .attr("cx", d => projection(d.geometry.coordinates)[0])
+    .attr("cy", d => projection(d.geometry.coordinates)[1])
+    .attr("r", r => 15*r.properties[x])
+    .attr("fill-opacity", 0.5)
+    .attr("fill", "black")
+    .attr("stroke", "red");
 // Ajout d'un groupe (villes) au SVG (svg)
 
 const villes = svg.append("g");
