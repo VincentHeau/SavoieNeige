@@ -12,15 +12,24 @@
 	</head>
 
 	<body>
-		<h1>L'Île de Ré à bicyclette</h1>
-		<div id="carte">
+		<div class = "content">
+			<div class="wrapper">
+				<div id="carte"></div>
+				<div class="graph1">graphique 1 (courbe)</div>
+				<div class="box_annee">boite année + hauteur de neige</div>
+				<div class="graph2">
+          <div><canvas id="myChart"></canvas></div>
+        </div>
+				<div class="legende">legende</div>
+	
+				<div class="titre">
+					<h1>Enneigement en Savoie</h1>
+				</div>
+	
+			</div>
 		</div>
-		
-		<input id="curseur" min="1996" max="2022" value="2022" step="1"
+    <input id="curseur" min="1996" max="2022" value="2022" step="1"
 		class="custom-slider custom-slider-bullet" type="range">
-		<div>
-			<canvas id="myChart"></canvas>
-		  </div>
 	</body>
 
 
