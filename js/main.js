@@ -83,9 +83,64 @@ function creation_graph(x){
 		}
 		}
 	});
+	return graph2
 }
 
-creation_graph("h2022");
+function maj_graph(x,graph){
+
+	var dict = {};
+	for (var i = 0; i < geojson_stations.features.length; i++) {
+		var key = geojson_stations.features[i].properties.Nom;
+		var val = geojson_stations.features[i].properties[x];
+		dict[key] = val;
+	}
+
+	// Fonction pour trier
+	function sort_object(obj) {
+		items = Object.keys(obj).map(function(key) {
+			return [key, obj[key]];
+		});
+		items.sort(function(first, second) {
+			return second[1] - first[1];
+		});
+		sorted_obj={}
+		$.each(items, function(k, v) {
+			use_key = v[0]
+			use_value = v[1]
+			sorted_obj[use_key] = use_value
+		})
+		return(sorted_obj);
+	} 
+
+
+	// On tri le dictionnaire
+	var sortedArrayOfObj = sort_object(dict);
+
+
+	// On crée les listes triées
+	newArrayLabel = [];
+	newArrayData = [];
+
+	for (const sta in sortedArrayOfObj) {
+		newArrayLabel.push(`${sta}`);
+		newArrayData.push(`${sortedArrayOfObj[sta]}`);
+	}
+	
+
+	// Mise à jour du graphe
+	graph.data.labels = newArrayLabel;
+	graph.data.datasets[0].data = newArrayData;
+    // chart.data.datasets.forEach((dataset) => {
+    //     dataset.data.pop();
+    // });
+    graph.update('none');
+	
+}
+
+
+
+graph2 = creation_graph("h2022");
+maj_graph("h2000",graph2);
 
 const map = d3.geoPath();
 
@@ -108,9 +163,46 @@ const svg = d3.select("#carte")
 
 $(".bouton").click(function() {
 	console.log("lancer l'animation");
+
+	// Initialisation à 1996
     creation_graph("h1996");
     creation_stations("h1996");
-	//$("#curseur").setCursorPosition(1996);
+	$("#curseur").val(1996);
+
+   // lancement de l'animation
+   // program to display a text using setInterval method
+   // program to stop the setInterval() method after five times
+
+   let annee = 1996;
+   var x = "h" + annee;
+    
+   var h_moy_neige = calculateAverage(x);
+
+   $(".box_info_annee").text(annee);
+   $(".box_info_neige").text(h_moy_neige);
+   
+   // function creation
+   let interval = setInterval(function(){
+	   // increasing the count by 1
+	   annee += 1;
+   
+	   // when count equals to 5, stop the function
+	   if(annee == 2022){
+		   clearInterval(interval);
+	   }
+       maj_graph("h"+annee.toString(),graph2);
+       creation_stations("h"+annee.toString());
+	   $("#curseur").val(annee);
+
+	   var x = "h" + annee;
+    
+	   var h_moy_neige = calculateAverage(x);
+
+	   $(".box_info_annee").text(annee);
+	   $(".box_info_neige").text(h_moy_neige);
+   
+   }, 1200);
+
   });
 
 /***************************************************************************/
@@ -172,15 +264,35 @@ creation_stations("h2022");
 
 // Au mouvement du curseur
 $('#curseur').on('change', function(){
+    
+	var annee = $('#curseur').val().toString();
+	x = "h" + annee;
+    
+	var h_moy_neige = calculateAverage(x);
 
-	x = "h" + $('#curseur').val().toString();
-
+	$(".box_info_annee").text(annee);
+    $(".box_info_neige").text(h_moy_neige);
 	// Mise à jour des cercles
 	creation_stations(x)
 
 	// Mise à jour du graphe 2
 	creation_graph(x);
 });
+
+
+
+function calculateAverage(annee) {
+
+	var total = 0;
+    var count = 0;
+
+	for (var i = 0; i < geojson_stations.features.length; i++) {
+		count +=1;
+		total += parseFloat(geojson_stations.features[i].properties[annee]);
+	}
+
+    return Math.round(100*total / count)/100;
+}
 
 
 
