@@ -1,41 +1,285 @@
-body, html {
-	width: 100%;
-	height: 100%;
+
+*{
+	margin: 0;
+	padding: 0;
 }
 
-h1 {
-	z-index: 2;
-	position: absolute;
-	top: 50px;
-	right: 70px;
-	color: white;
-	font-size: 80px;
-	font-weight: bold;
-	font-family: Bitter;
+body {
+	margin: 0;
+	min-height: 100vh;
+	max-height: 100vh;
+	
+}
+
+
+/* Creation du CSS grid contenant 9 éléments*/
+.wrapper {
+	min-height: 100vh;
+	max-height: 100vh;
+	display: grid;
+	grid-template-columns: 0fr 3fr 1fr;
+	grid-gap: 3px;
+	grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
 #carte {
-	z-index: 1;
-	position: relative;
-	width: 100%;
-	height: 100%;
-	background-image: linear-gradient(0deg, #182848, #2980b9);
+	grid-column: 1 / 4;
+	grid-row: 1 / 7;
+	border: solid;
 }
 
-#pois {
-	z-index: 2;
-	position: absolute;
-	bottom: 50px;
-	left: 50px;
-	padding: 10px 10px 0 10px;
-	color: black;
-	font-size: 20px;
+#choixmultiple{
+	grid-column: 3;
+	grid-row: 2;
+	display: flex;
+	border: solid;
+}
+
+#cartesuperpose {
+	grid-column: 1 / 4;
+	grid-row: 1 / 7;
+	border: solid;
+}
+
+
+.graph1 {
+  	grid-column: 2 / 4;
+  	grid-row: 2 /5;
+	border: solid;
+	margin: 20px;
+	visibility: hidden;
+	animation: apparition 4s ;
+}
+
+
+
+@keyframes apparition {
+	0%    { opacity: 0;
+			}
+	20%   { opacity: 0.2;
+			}
+	80%   { opacity: 0.5;
+			}
+	100%  { opacity: 1;
+	}
+  }
+
+.box_info {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-evenly;
+	grid-column: 3;
+	grid-row: 1 / 2;
+	border: solid;
+}
+
+.box_info_annee {
+	font-size: 70px;
 	font-weight: bold;
 	font-family: Bitter;
-	background-color:rgba(255,255,255,0.3);
-	border-bottom: 3px solid white;
 }
 
-#pois p {
-	margin-bottom: 10px;
+.box_info_neige {
+	font-size: 40px;
+	font-weight: bold;
+	font-family: Bitter;
 }
+
+.graph2 {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	grid-column: 1;
+	grid-row: 1 / 7;
+	border: solid;
+	
+}
+#chartcontainer{
+	width: max-content;
+    height:100%;
+}
+
+.legende {
+	grid-column: 3;
+	grid-row: 5 / 7;
+	border: solid;
+}
+.zone_bouton {
+	position: relative;
+	padding-left: 10px;
+	
+}
+.titre {
+	grid-column: 2 / 3;
+	grid-row: 1;
+	display: flex;
+	border: solid;
+	color: black;
+	font-size: 30px;
+	font-weight: bold;
+	font-family: Bitter;
+}
+
+#menu{
+	height: fit-content;
+	width: fit-content;
+	font-size: 30px;
+	justify-content: end;
+	transform: rotate(90deg);
+	cursor: pointer;
+	
+}
+
+
+
+.effet_bt {
+	text-align: center;
+	font-size:140%;
+	padding: 5px 10px;
+	margin: 10px;
+	color: rgb(255, 255, 255);
+	border: none;
+	border-radius: 10px;
+	background-color: rgba(150, 150, 150, 0.559);
+	text-shadow: 0 1px 1px rgba(153, 129, 51, 0.8);
+	outline:none;
+	}
+.effet_bt:hover,
+.effet_bt:focus {
+	  color: white;
+  
+	  box-shadow: 0 1px 0 rgba(255,0,255,.1),
+				  0 0 1px 1px rgba(255,255,255,.3) inset,
+				  0 1px rgba(255,255,255,.4) inset,
+				  0 0 5px rgba(0,0,0,1);
+	  border-color: rgba(255, 255, 255, .2);
+	}
+  
+.effet_bt:active {
+	  background-color: rgba(175, 12, 12, 0.301);
+	  border: 1px solid black;
+	}
+  
+  
+  
+
+.curseur {
+	display: flex;
+	flex-direction: row;
+	justify-content:center;
+	align-items: center;
+	grid-column: 2/3;
+	grid-row: 6;
+	border: solid;
+}
+
+
+
+
+/* Style du bouton qui lance l'animation */
+:root {
+	--button-height: 0.5rem;
+	--button-color: rgb(54, 83, 147);
+  }
+  
+  .fake-player {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 1rem;
+	height: 1rem;
+	padding: 0.5rem;
+	border: 0.2rem solid var(--button-color);
+	border-radius: 50%;
+	filter: drop-shadow(0 0 3.1rem rgba(255, 255, 255, 0.8));
+  }
+  
+  button {
+	margin: 0;
+	padding: 0;
+  }
+  
+  .play {
+	height: 0;
+	width: 0;
+	margin-left: calc(2 * 0.14 * var(--button-height));
+	/*margin-left: 17px;*/
+	background: none;
+	border: none;
+	border-top: var(--button-height) solid transparent;
+	border-bottom: var(--button-height) solid transparent;
+	border-left: calc(var(--button-height) * 2 * 0.86) solid var(--button-color);
+  }
+  
+  .pause {
+	position: relative;
+	background: none;
+	border: none;
+	height: calc(var(--button-height) * 2);
+	width: calc(var(--button-height) * 2 * 0.86);
+  }
+  .pause:before, .pause:after {
+	content: "";
+	position: absolute;
+	top: 0;
+	height: 100%;
+	width: 33%;
+	background: var(--button-color);
+  }
+  .pause:before {
+	left: 0;
+  }
+  .pause:after {
+	right: 0;
+  }
+  
+  .hidden {
+	display: none;
+  }
+
+  div.tooltip {
+	display:none;
+	position:absolute;
+	text-align:center;
+	color:rgb(0, 0, 0);
+	padding:5px;
+	font-size:11px;
+	background:rgba(0,0,0,0.3);
+	border-radius:4px;
+}
+
+.curseur {
+	width: 100%; /* Width of the outside container */
+  }
+  
+  /* The slider itself */
+  #curseur {
+	-webkit-appearance: none;  /* Override default CSS styles */
+	appearance: none;
+	border-radius: 3px;
+	width: 100%; /* Full-width */
+	height: 5px; /* Specified height */
+	background: #4d4c4ce0; /* Grey background */
+	outline: none; /* Remove outline */
+	opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+	-webkit-transition: .2s; /* 0.2 seconds transition on hover */
+	transition: opacity .2s;
+  }
+  
+  /* Mouse-over effects */
+  #curseur:hover {
+	opacity: 1; /* Fully shown on mouse-over */
+  }
+  
+  /* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+  #curseur::-webkit-slider-thumb {
+	-webkit-appearance: none; /* Override default look */
+	appearance: none;
+	width: 25px; /* Set a specific slider handle width */
+	height: 25px; /* Slider handle height */
+	border-radius: 5px;
+	background: #0f58bf; 
+	cursor: pointer; /* Cursor on hover */
+  }
+  
+  

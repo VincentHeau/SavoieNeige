@@ -6,25 +6,84 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>CartoDyn - Template 2</title>
 		<!-- FAVICON + CSS -->
-		<link href="img/carthageo.png" rel="icon">
+		<link href="img/flocon.png" rel="icon">
 		<link href="https://fonts.googleapis.com/css?family=Bitter&display=swap" rel="stylesheet">
-		<link href="css/reset.css" rel="stylesheet">
 		<link href="css/main.css" rel="stylesheet">
 	</head>
+
 	<body>
-		<h1>L'Île de Ré à bicyclette</h1>
-		<div id="carte"></div>
-		<div id="pois"></div>
+
+		
+		<div class="wrapper">
+
+			<div id="carte"></div>
+
+			<div class="graph1"> 
+				<div id="container"></div>
+			</div>
+
+			<div id="effet" class="box_info effet_bt" title="Afficher ou masquer le graphique">
+				<h1 class="box_info_annee">
+					2022
+				</h1>
+				<h2 class="box_info_neige">
+					1.7 m
+				</h2>
+			</div>
+
+            
+			
+			<div class="graph2">
+				<div id="chartcontainer"><canvas id="myChart" ></canvas></div>
+			</div>
+
+			<div class="legende">
+				<div id="menu" class="effet_bt">|||</div>	
+			</div>
+
+			<div class="titre">
+				<h1>Enneigement en Savoie</h1>
+			</div>
+
+			<div class="curseur">
+				
+				<input id="curseur" min="1996" max="2022" value="2022" step="1"
+				class="custom-slider custom-slider-bullet" type="range">
+			
+
+				<div class="zone_bouton">
+					<div class="fake-player bouton">
+						<button role="play" class="play"></button>
+						<button role="pause" class="pause hidden"></button>
+					</div>
+				</div>
+		    </div>
+
+		</div>
+	
 	</body>
+
+
 	<!-- LIBRAIRIES JAVASCRIPT D3 & JQUERY -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 	<script src="https://d3js.org/d3.v7.min.js"></script>
 	<script src="https://d3js.org/d3-geo-projection.v4.min.js"></script>
 	<script src="https://d3js.org/d3-tile.v0.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+	</script>
 	<!-- DONNEES (GEOJSON, WGS84) -->
 	<script src="js/communes.js"></script>
 	<script src="js/villes.js"></script>
 	<script src="js/roads.js"></script>
+	<script src="js/stations.js"></script>
+	<script src="js/savoie.js"></script>
+	<script src="js/depts.js"></script>
 	<!-- PROGRAMME JAVASCRIPT -->
 	<script src="js/main.js"></script>
 </html>
