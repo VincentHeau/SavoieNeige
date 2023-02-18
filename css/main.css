@@ -25,6 +25,7 @@ body {
 #carte {
 	grid-column: 1 / 4;
 	grid-row: 1 / 7;
+	overflow: hidden;
 	border: solid;
 }
 
@@ -35,17 +36,11 @@ body {
 	border: solid;
 }
 
-#cartesuperpose {
-	grid-column: 1 / 4;
-	grid-row: 1 / 7;
-	border: solid;
-}
 
 
 .graph1 {
   	grid-column: 2 / 4;
   	grid-row: 2 /5;
-	border: solid;
 	margin: 20px;
 	visibility: hidden;
 	animation: apparition 4s ;
@@ -70,7 +65,6 @@ body {
 	justify-content: space-evenly;
 	grid-column: 3;
 	grid-row: 1 / 2;
-	border: solid;
 }
 
 .box_info_annee {
@@ -91,7 +85,6 @@ body {
 	justify-content: center;
 	grid-column: 1;
 	grid-row: 1 / 7;
-	border: solid;
 	
 }
 #chartcontainer{
@@ -102,18 +95,30 @@ body {
 .legende {
 	grid-column: 3;
 	grid-row: 5 / 7;
-	border: solid;
+
 }
 .zone_bouton {
 	position: relative;
 	padding-left: 10px;
 	
 }
-.titre {
+.haut-page {
 	grid-column: 2 / 3;
 	grid-row: 1;
 	display: flex;
-	border: solid;
+	flex-direction: column ;
+	align-items: center;
+	color: black;
+}
+#haut{
+	display: flex;
+	color: black;
+	font-size: 15px;
+	margin:2px;
+	font-weight: bold;
+	font-family: Bitter;
+}
+#titre{
 	color: black;
 	font-size: 30px;
 	font-weight: bold;
@@ -170,7 +175,6 @@ body {
 	align-items: center;
 	grid-column: 2/3;
 	grid-row: 6;
-	border: solid;
 }
 
 
@@ -281,5 +285,33 @@ body {
 	background: #0f58bf; 
 	cursor: pointer; /* Cursor on hover */
   }
+
+  /* Gestion des boutons du haut de la page */
+
+.bt-haut {
+	text-align: center;
+	padding: 5px 10px;
+	color: #eee;
+	border-radius: 4px;
+	background-color: #208fd9;
+	outline:none;
+  }
+  .bt-haut:hover,
+  .bt-haut:focus {
+	  color: white;
+	  background-color: #3060ff;
+	  box-shadow: 0 1px 0 rgba(255,255,255,.1),
+				  0 0 1px 1px rgba(255,255,255,.3) inset,
+				  0 1px rgba(255,255,255,.4) inset,
+				  0 0 5px rgba(174,58,235,1);
+	  border-color: rgba(255, 255, 255, .2);
+  }
+  
+  .bt-haut:active {
+	  background-color: #246cbf;
+	  border: 1px solid black;
+  }
+  
+  
   
   
