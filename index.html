@@ -18,7 +18,9 @@
 
 			<div id="carte"></div>
 
-			<div class="graph1">graphique 1 (courbe)</div>
+			<div class="graph1"> 
+				<div id="container"></div>
+			</div>
 
 			<div class="box_info">
 				<h1 class="box_info_annee">
@@ -56,7 +58,10 @@
 			</div> -->
 
 			<div class="zone_bouton">
-				<a class="bouton play-btn" href="#"></a>
+				<div class="fake-player bouton">
+					<button role="play" class="play"></button>
+					<button role="pause" class="pause hidden"></button>
+				</div>
 			</div>
 
 		</div>
@@ -70,6 +75,11 @@
 	<script src="https://d3js.org/d3-geo-projection.v4.min.js"></script>
 	<script src="https://d3js.org/d3-tile.v0.0.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+	<script src="https://code.highcharts.com/highcharts.js"></script>
+    <script src="https://code.highcharts.com/highcharts-more.js"></script>
+	<script src="https://code.highcharts.com/modules/exporting.js"></script>
+	<script src="https://code.highcharts.com/modules/export-data.js"></script>
+	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
 
 	</script>
 	<!-- DONNEES (GEOJSON, WGS84) -->
