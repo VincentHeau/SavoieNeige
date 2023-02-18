@@ -51,34 +51,40 @@ function creation_graph(x){
 
 	// Création du graph
 
-	var config = {
-		type: 'line',
-		data: {
-		labels: newArrayLabel,
-		datasets: [{
-			label: 'Graph Line',
-			data: newArrayData,
-			backgroundColor: 'rgba(0, 119, 204, 0.3)'
-		}]
-		}
-	};
 	
 	try{ graph2.destroy()}
 	catch{}
+
+	const gradientFill = ctx.getContext("2d").createLinearGradient(500, 0, 100, 0);
+	gradientFill.addColorStop(0, "black");
+	gradientFill.addColorStop(1, "#B0E0E6");
+
 	graph2 = new Chart(ctx, {
 		type: 'bar',
 		data: {
 		labels: newArrayLabel,
 		datasets: [{
-			label: '# of Votes',
+			label: 'Hauteur moyenne de neige',
 			data: newArrayData,
+			backgroundColor: gradientFill,
 			borderWidth: 1
 		}]
 		},
 		options: {
+			indexAxis: 'y',
+			plugins: {
+				title: {
+					display: true,
+					text: 'Custom Chart Title'
+				}},
 		scales: {
+			
 			y: {
-			beginAtZero: true
+			beginAtZero: true,
+			ticks: {
+				z: 1,
+				mirror: true //Show y-axis labels inside horizontal bars
+			}
 			}
 		}
 		}
@@ -159,6 +165,13 @@ const svg = d3.select("#carte")
 	.attr("width", "100%")
 	.attr("height", "100%");
 
+
+const svglegend = d3.select("#legende")
+	.append("svg")
+	.attr("id", "svg1")
+	.attr("width", "100%")
+	.attr("height", "100%");
+
 /// Création de l'animation
 var play = false;
 
@@ -204,9 +217,9 @@ $(".bouton").click(function() {
 			var h_moy_neige = calculateAverage(x);
 
 			$(".box_info_annee").text(annee);
-			$(".box_info_neige").text(h_moy_neige);
+			$(".box_info_neige").text(h_moy_neige+" m");
 		
-		}, 1200);
+		}, 1000);
 	}
 	else{
 		try{clearInterval(interval)}
@@ -220,20 +233,6 @@ $(".bouton").click(function() {
 /*********************************** AJOUTER DES OBJETS SUR LES CARTES *****/
 /***************************************************************************/
 
-
-// Ajout d'un groupe (depts) au SVG (svg)
-
-const depts = svg.append("g");
-
-depts.selectAll("path")
-	// La variable geojson_communes est créée dans le fichier JS qui contient le GeoJSON
-	.data(geojson_depts.features)
-	.enter()
-	.append("path")
-	.attr("d", map)
-	// Sémiologie (par défaut) des objets
-	.style("fill", "white")
-	.style("stroke-width", 0);
 
 // Ajout de tuiles Mapbox
 
@@ -251,26 +250,37 @@ svg.selectAll("image")
 	.attr("width", tiles.scale)
 	.attr("height", tiles.scale);
 
+svg.selectAll("image")
+	.data(tiles)
+	.enter().append("image")
+	.attr("xlink:href", function(d) { return "http://{s}.tile.openstreetmap.fr/osmfr/{z}/{x}/{y}.png"; })
+	.attr("x", function(d) { return (d[0] + tiles.translate[0]) * tiles.scale; })
+	.attr("y", function(d) { return (d[1] + tiles.translate[1]) * tiles.scale; })
+	.attr("width", tiles.scale)
+	.attr("height", tiles.scale);
+
 
 // Ajout d'un groupe (station) au SVG (svg)
 
 
 const stations = svg.append("g").attr("id", "stations");
+const legende_dessin = svglegend.append("g").attr("id", "dessin_legend");
 const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 var x = "h2021";
 
 function creation_stations(x){
+
 	stations.selectAll("circle")
-    .data(geojson_stations.features)
-    .join("circle")
-	.attr("Nom", d => d.properties.Nom)
-	.attr("hmoy",d => (Math.round(100*d.properties[x])/100).toString())
-    .attr("cx", d => projection(d.geometry.coordinates)[0])
-    .attr("cy", d => projection(d.geometry.coordinates)[1])
-    .attr("r", r => 15*r.properties[x])
-    .attr("fill-opacity", 0.5)
-    .attr("fill", "black")
-    .attr("stroke", "red");
+		.data(geojson_stations.features)
+		.join("circle")
+		.attr("Nom", d => d.properties.Nom)
+		.attr("hmoy",d => (Math.round(100*d.properties[x])/100).toString())
+		.attr("cx", d => projection(d.geometry.coordinates)[0])
+		.attr("cy", d => projection(d.geometry.coordinates)[1])
+		.attr("r", r => 15*r.properties[x])
+		.attr("fill-opacity", 0.5)
+		.attr("fill", "black")
+		.attr("stroke", "red");
 
 
 	stations.selectAll("circle")
@@ -292,6 +302,17 @@ function creation_stations(x){
 			tooltip.style("left", "-500px").style("top", "-500px");
 			d.srcElement.setAttribute("fill","black");
 		});
+
+	legende_dessin.selectAll("circle")
+		.join("circle")
+		.attr("Nom", d => d.properties.Nom)
+		.attr("hmoy",d => (Math.round(100*d.properties[x])/100).toString())
+		.attr("cx", 20)
+		.attr("cy", 20)
+		.attr("r", r => 15*r.properties[x])
+		.attr("fill-opacity", 0.5)
+		.attr("fill", "black")
+		.attr("stroke", "red");
 
 	
 }
@@ -521,7 +542,7 @@ chart: {
 	// Explicitly tell the width and height of a chart
 	width: null,
 	height: 220,
-	backgroundColor: "none"
+	backgroundColor: "rgba(255, 254, 254, 0.727)"
 },
 
 title: {
@@ -595,3 +616,14 @@ function clickHandler () {
 };
 
 player.addEventListener('click', clickHandler);
+
+// Afficher/masquer le graph 2
+var display = false;
+$(".effet_bt").click(function(){
+	if (!display){
+		display = !display;
+		console.log('to');
+		$(".graph1").css("visibility", "visible")
+	}
+	
+});
