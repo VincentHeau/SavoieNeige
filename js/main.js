@@ -64,7 +64,7 @@ function creation_graph(x){
 		data: {
 		labels: newArrayLabel,
 		datasets: [{
-			label: 'Hauteur moyenne de neige',
+			label: 'Hauteur moyenne de neige (en m)',
 			data: newArrayData,
 			backgroundColor: gradientFill,
 			borderWidth: 1
@@ -77,7 +77,7 @@ function creation_graph(x){
 			plugins: {
 				title: {
 					display: true,
-					text: 'Custom Chart Title'
+					text: 'Classement des stations savoyardes en '+x.slice(1,5)
 				}},
 		scales: {
 			
@@ -153,9 +153,9 @@ maj_graph("h2000",graph2);
 const map = d3.geoPath();
 
 const projection = d3.geoMercator()
-	.center([5, 47.1])
-	.scale(9000)
-	//.translate([width/2, height/2]);
+	.center([5.8, 45.5])
+	.scale(17000)
+	.translate([width/2, height/2]);
 
 map.projection(projection);
 
@@ -168,11 +168,11 @@ const svg = d3.select("#carte")
 	.attr("height", "100%");
 
 
-const svglegend = d3.select("#legende")
+const svglegend = d3.select("#box-legend")
 	.append("svg")
-	.attr("id", "svg1")
+	.attr("id", "svg2")
 	.attr("width", "100%")
-	.attr("height", "100%");
+	.attr("height", "50%");
 
 /// Création de l'animation
 var play = false;
@@ -234,15 +234,17 @@ $(".bouton").click(function() {
 /***************************************************************************/
 /*********************************** AJOUTER DES OBJETS SUR LES CARTES *****/
 /***************************************************************************/
-
+	
 
 // Ajout de tuiles Mapbox
 
 let tiles = d3.tile()
-	.size([width, height])
+	.size([2*width, 2*height])
 	.scale(projection.scale() * 2 * Math.PI)
 	.translate(projection([0, 0]))
 ();
+
+
 svg.selectAll("image")
 	.data(tiles)
 	.enter().append("image")
@@ -314,14 +316,31 @@ function creation_stations(x){
 			tooltip.style("left", "-500px").style("top", "-500px");
 			d.srcElement.setAttribute("fill","black");
 		});
+    
+	R1 = geojson_stations.features[0].properties["h2020"];
+	console.log(R1);
+	legende_dessin
+		.append("circle")
+		.attr("cx", 70)
+		.attr("cy", 70)
+		.attr("r",15*R1)
+		.attr("fill-opacity", 0.5)
+		.attr("fill", "black")
+		.attr("stroke", "red");
+	legende_dessin
+		.append("circle")
+		.attr("cx", 70)
+		.attr("cy", 70-5*R1)
+		.attr("r",20*R1)
+		.attr("fill-opacity", 0.5)
+		.attr("fill", "black")
+		.attr("stroke", "red");
 
-	legende_dessin.selectAll("circle")
-		.join("circle")
-		.attr("Nom", d => d.properties.Nom)
-		.attr("hmoy",d => (Math.round(100*d.properties[x])/100).toString())
-		.attr("cx", 20)
-		.attr("cy", 20)
-		.attr("r", r => 15*r.properties[x])
+	legende_dessin
+		.append("circle")
+		.attr("cx", 70)
+		.attr("cy", 70-15*R1)
+		.attr("r",30*R1)
 		.attr("fill-opacity", 0.5)
 		.attr("fill", "black")
 		.attr("stroke", "red");
