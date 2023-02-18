@@ -37,12 +37,33 @@
 				<div id="chartcontainer"><canvas id="myChart" ></canvas></div>
 			</div>
 
-			<div class="legende">
-				<div id="menu" class="effet_bt">|||</div>	
+			<div id = "box-legend" class="legende">
+				<div id="hs">
+					<input type="checkbox" id="haute-savoie" name="haute-savoie" value="Haute-Savoie">
+					<label for="Haute-Savoie"> Haute-Savoie</label><br>
+					<button>Zoomer sur la haute-savoie</button>
+				</div>
+				
+				<div id ="s">
+					<input type="checkbox" id="savoie" name="savoie" value="Savoie">
+					<label for="Haute-Savoie"> Savoie</label><br>
+					<button>Zoomer sur la savoie</button>
+				</div>
+				
+				<!-- <div id="menu" class="effet_bt">|||</div>	 -->
 			</div>
 
-			<div class="titre">
-				<h1>Enneigement en Savoie</h1>
+			<div class="haut-page">
+				<div id="haut">
+					<div class ="bt-haut">Contact</div>
+					<div class ="bt-haut">Mention légales</div>
+					<div class ="bt-haut">Politique de confidentialité</div>
+					<div class ="bt-haut">Aide</div>
+				</div>
+				<div id="titre">
+					<h1>Enneigement en Savoie</h1>
+				</div>
+				
 			</div>
 
 			<div class="curseur">
@@ -69,6 +90,7 @@
 	<script src="https://d3js.org/d3.v7.min.js"></script>
 	<script src="https://d3js.org/d3-geo-projection.v4.min.js"></script>
 	<script src="https://d3js.org/d3-tile.v0.0.min.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/d3-tile@1"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
