@@ -11,6 +11,8 @@ body {
 	
 }
 
+
+/* Creation du CSS grid contenant 9 éléments*/
 .wrapper {
 	min-height: 100vh;
 	max-height: 100vh;
@@ -132,7 +134,7 @@ body {
 
 
 
-
+/* Style du bouton qui lance l'animation */
 :root {
 	--button-height: 0.5rem;
 	--button-color: rgb(54, 83, 147);
