@@ -2,7 +2,7 @@
 /************************************************ CREATION DE LA CARTE *****/
 /***************************************************************************/
 
-const width = 1500, height = 1000;
+
 
 ///  Création du graphique en bar
 var ctx = document.getElementById('myChart');
@@ -153,9 +153,9 @@ maj_graph("h2000",graph2);
 const map = d3.geoPath();
 
 const projection = d3.geoMercator()
-	.center([5.8, 45.5])
-	.scale(17000)
-	.translate([width/2, height/2]);
+	.center([5.8, 46.2])
+	.scale(16000)
+	//.translate([width/2, height/2]);
 
 map.projection(projection);
 
@@ -177,11 +177,11 @@ const svglegend = d3.select("#box-legend")
 /// Création de l'animation
 var play = false;
 
-$(".bouton").click(function() {
+$("#play").click(function() {
     play = !play;
-	console.log(play);
+	
 	if (play){
-		console.log("lancer l'animation");
+		$("#play").html("<b>||</b>");
 
 		// Initialisation à 1996
 		creation_graph("h1996");
@@ -209,6 +209,7 @@ $(".bouton").click(function() {
 			// when count equals to 5, stop the function
 			if(annee == 2022 || play==false){
 				clearInterval(interval);
+				$("#play").html("Play");
 			}
 			maj_graph("h"+annee.toString(),graph2);
 			creation_stations("h"+annee.toString());
@@ -224,6 +225,7 @@ $(".bouton").click(function() {
 		}, 1000);
 	}
 	else{
+		$("#play").html("Play");
 		try{clearInterval(interval)}
 		catch{}
 	}
@@ -234,12 +236,17 @@ $(".bouton").click(function() {
 /***************************************************************************/
 /*********************************** AJOUTER DES OBJETS SUR LES CARTES *****/
 /***************************************************************************/
-	
 
+// Définition des hauteurs et largeurs en fonction de la fenêtre de l'utilisateur
+// const width = 1500, height = 1000;
+var el = document.getElementById("carte");
+
+const width = el.clientWidth;
+const height = el.clientHeight;
 // Ajout de tuiles Mapbox
 
 let tiles = d3.tile()
-	.size([2*width, 2*height])
+	.size([width, height])
 	.scale(projection.scale() * 2 * Math.PI)
 	.translate(projection([0, 0]))
 ();
@@ -536,17 +543,10 @@ series: [{
 });
 
 
-const player = document.querySelector('.fake-player');
-
-function clickHandler () { 
-    const buttons = Array.from(this.children);
-    buttons.forEach(button => button.classList.toggle('hidden'))
-};
-
-player.addEventListener('click', clickHandler);
 
 // Afficher/masquer le graph 2
 var display = false;
+
 $("#effet").click(function(){
 	if (!display){
 		display = !display;
@@ -559,4 +559,20 @@ $("#effet").click(function(){
 		$(".graph1").css("visibility", "hidden")
 	}
 	
+});
+
+// Bouton - source
+var displaySource = false;
+$("#btn-source").click(function(){
+	if (!displaySource){
+		displaySource = !displaySource;
+		console.log(document.getElementById("source"));
+		document.getElementById("source").removeAttribute("hidden");
+		$("#btn-source").addClass("active");
+	}
+	else{
+		displaySource = !displaySource;
+		document.getElementById("source").setAttribute("hidden", true);
+		$("#btn-source").removeClass("active");
+	}
 });
