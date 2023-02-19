@@ -2,6 +2,8 @@
 
 _Ce site a été créé pour un projet de classe consistant à réaliser une cartographie dynamique via les outils de programmation web._
 
+** Commentaire accompagnant le travail **
+
 ## Table des matières
 1. [Descriptif du site](##1)
 
@@ -15,10 +17,10 @@ _Ce site a été créé pour un projet de classe consistant à réaliser une car
 
       2.4 [Autres possibilités envisagées pour compléter le site](###2.4)
 
-      2.5 [Amélioration du css](###2.5)
+      2.5 [Amélioration du css et du fond de carte](###2.5)
 
 
-3. [Données utilisés](##4)
+3. [Données utilisées](##4)
 
 4. [Versions](##5)
 
@@ -97,8 +99,8 @@ Pour les données nivologiques :
 * [Météo France](https://donneespubliques.meteofrance.fr/?fond=produit&id_produit=94&id_rubrique=32)
 
 ## 4. Versions
-1
+v1 déployée avec Heroku : [savoieneige](https://savoieneige.herokuapp.com/)
 
 ## 5. Auteurs
 * **Vincent HEAU** [VincentHeau](https://github.com/VincentHeau)
-* **Matthieu Ahr** [TFillon](https://github.com/MatthieuAhr)
+* **Matthieu Ahr** [MatthieuAhr](https://github.com/MatthieuAhr)
