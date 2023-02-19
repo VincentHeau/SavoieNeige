@@ -576,3 +576,52 @@ $("#btn-source").click(function(){
 		$("#btn-source").removeClass("active");
 	}
 });
+
+
+// Bouton - Politique de confidentialité
+var displayPol = false;
+$("#btn-pol").click(function(){
+	if (!displayPol){
+		displayPol = !displayPol;
+		console.log(document.getElementById("pol"));
+		document.getElementById("pol").removeAttribute("hidden");
+		$("#btn-pol").addClass("active");
+	}
+	else{
+		displayPol = !displayPol;
+		document.getElementById("pol").setAttribute("hidden", true);
+		$("#btn-pol").removeClass("active");
+	}
+});
+
+// Bouton - Contact
+var displayContact = false;
+$("#btn-contact").click(function(){
+	if (!displayContact){
+		displayContact = !displayContact;
+		console.log(document.getElementById("contact"));
+		document.getElementById("contact").removeAttribute("hidden");
+		$("#btn-contact").addClass("active");
+	}
+	else{
+		displayContact = !displayContact;
+		document.getElementById("contact").setAttribute("hidden", true);
+		$("#btn-contact").removeClass("active");
+	}
+});
+
+// Bouton - Mentions légales
+var displayMention = false;
+$("#btn-mention").click(function(){
+	if (!displayMention){
+		displayMention = !displayMention;
+		console.log(document.getElementById("mention"));
+		document.getElementById("mention").removeAttribute("hidden");
+		$("#btn-mention").addClass("active");
+	}
+	else{
+		displayMention = !displayMention;
+		document.getElementById("mention").setAttribute("hidden", true);
+		$("#btn-mention").removeClass("active");
+	}
+});
