@@ -4,11 +4,12 @@
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<title>CartoDyn - Template 2</title>
+		<title>L'enneigement au fil des ans</title>
 		<!-- FAVICON + CSS -->
 		<link href="img/flocon.png" rel="icon">
 		<link href="https://fonts.googleapis.com/css?family=Bitter&display=swap" rel="stylesheet">
 		<link href="css/main.css" rel="stylesheet">
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
 	</head>
 
 	<body>
@@ -21,8 +22,10 @@
 			<div class="graph1"> 
 				<div id="container"></div>
 			</div>
-
-			<div id="effet" class="box_info effet_bt" title="Afficher ou masquer le graphique">
+            
+			
+			<div class="card box_info effet_bt" title="Afficher ou masquer le graphique" style="background-color: rgba(79, 99, 104, 0.385);">
+				Les chiffres de l'année
 				<h1 class="box_info_annee">
 					2022
 				</h1>
@@ -37,31 +40,35 @@
 				<div id="chartcontainer"><canvas id="myChart" ></canvas></div>
 			</div>
 
-			<div id = "box-legend" class="legende">
-				<div id="hs">
-					<input type="checkbox" id="haute-savoie" name="haute-savoie" value="Haute-Savoie">
-					<label for="Haute-Savoie"> Haute-Savoie</label><br>
-					<button>Zoomer sur la haute-savoie</button>
-				</div>
-				
-				<div id ="s">
-					<input type="checkbox" id="savoie" name="savoie" value="Savoie">
-					<label for="Haute-Savoie"> Savoie</label><br>
-					<button>Zoomer sur la savoie</button>
-				</div>
+			<div id = "box-legend" class="card legende">
+				<button id="hs" type="button" class="btn btn-danger btn-legend">Haute-Savoie</button>
+				<button id="s" type="button" class="btn btn-warning btn-legend">Savoie</button>	
 				
 				<!-- <div id="menu" class="effet_bt">|||</div>	 -->
 			</div>
 
 			<div class="haut-page">
 				<div id="haut">
-					<div class ="bt-haut">Contact</div>
-					<div class ="bt-haut">Mention légales</div>
-					<div class ="bt-haut">Politique de confidentialité</div>
-					<div class ="bt-haut">Aide</div>
+					<div class="card" style="background-color: rgba(254, 254, 254, 0.668);">
+						<div class="card-body">
+						  <h6 class="card-subtitle mb-2 text-muted">Réalisé par Matthieu Ahr et Vincent Héau</h6>
+						  <p class="card-text"><h3>L'enneigement au fil des ans de 1996 à 2022 dans les stations savoyardes et haut-savoyardes</h3></p>
+						  <!-- <button type="button" class="btn btn-outline-primary">0</button> -->
+						  <button type="button" class="btn btn-outline-secondary">Suite</button>
+						  <button type="button" class="btn btn-outline-success">Contact</button>
+						  <button type="button" class="btn btn-outline-danger">Aide</button>
+						  <button type="button" class="btn btn-outline-warning">Politique de confidentialité</button>
+						  <button id="btn-source" type="button" class="btn btn-outline-info">Sources</button>
+						  <button type="button" class="btn btn-outline-light">1</button>
+						  <button id="effet" type="button" class="btn btn-outline-dark">Voir le graphique complet</button>
+						  <p hidden id="source" class="card-text">Données mcsk</p>
+						  <p hidden id="pol" class="card-text">Données mcsk</p>
+						</div>
+					  </div>
 				</div>
 				<div id="titre">
-					<h1>Enneigement en Savoie</h1>
+
+					
 				</div>
 				
 			</div>
@@ -73,10 +80,7 @@
 			
 
 				<div class="zone_bouton">
-					<div class="fake-player bouton">
-						<button role="play" class="play"></button>
-						<button role="pause" class="pause hidden"></button>
-					</div>
+					<button id="play" type="button" class="btn btn-outline-dark">Play</button>
 				</div>
 		    </div>
 
@@ -90,13 +94,13 @@
 	<script src="https://d3js.org/d3.v7.min.js"></script>
 	<script src="https://d3js.org/d3-geo-projection.v4.min.js"></script>
 	<script src="https://d3js.org/d3-tile.v0.0.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/d3-tile@1"></script>
 	<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 	<script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="https://code.highcharts.com/highcharts-more.js"></script>
 	<script src="https://code.highcharts.com/modules/exporting.js"></script>
 	<script src="https://code.highcharts.com/modules/export-data.js"></script>
 	<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 
 	</script>
 	<!-- DONNEES (GEOJSON, WGS84) -->
