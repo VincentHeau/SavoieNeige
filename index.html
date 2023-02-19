@@ -19,12 +19,9 @@
 
 			<div id="carte"></div>
 
-			<div class="graph1"> 
-				<div id="container"></div>
-			</div>
             
 			
-			<div class="card box_info effet_bt" title="Afficher ou masquer le graphique" style="background-color: rgba(79, 99, 104, 0.385);">
+			<div id = "boite-outil" class="card box_info effet_bt data-mdb-perfect-scrollbar" style="background-color: rgba(79, 99, 104, 0.385);">
 				Les chiffres de l'année
 				<h1 class="box_info_annee">
 					2022
@@ -32,6 +29,8 @@
 				<h2 class="box_info_neige">
 					1.7 m
 				</h2>
+				<button id="leg-view" type="button" class="btn btn-danger btn-legend" >▼ Légende</button>
+				
 			</div>
 
             
@@ -40,12 +39,20 @@
 				<div id="chartcontainer"><canvas id="myChart" ></canvas></div>
 			</div>
 
-			<div id = "box-legend" class="card legende">
-				<button id="hs" type="button" class="btn btn-danger btn-legend">Haute-Savoie</button>
-				<button id="s" type="button" class="btn btn-warning btn-legend">Savoie</button>	
+			<!-- <div id = "box-legend" class="card legende">
+
+				<div class="card text-white bg-secondary mb-3" style="max-width: 18rem;">
+					<div class="card-header">Header</div>
+					<div class="card-body">
+					  <h5 class="card-title">Secondary card title</h5>
+					  <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+					  <button id="hs" type="button" class="btn btn-danger btn-legend">Haute-Savoie</button>
+					  <button id="s" type="button" class="btn btn-warning btn-legend">Savoie</button>	
+					  
+					</div>
+				</div>
 				
-				<!-- <div id="menu" class="effet_bt">|||</div>	 -->
-			</div>
+			</div> -->
 
 			<div class="haut-page">
 				<div id="haut">
@@ -66,10 +73,9 @@
 						</div>
 					  </div>
 				</div>
-				<div id="titre">
-
-					
-				</div>
+					<div hidden id="graph1" class="graph1"> 
+						<div id="container"></div>
+					</div>
 				
 			</div>
 

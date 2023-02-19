@@ -153,8 +153,8 @@ maj_graph("h2000",graph2);
 const map = d3.geoPath();
 
 const projection = d3.geoMercator()
-	.center([5.8, 46.2])
-	.scale(16000)
+	.center([5.8, 46.3])
+	.scale(13000)
 	//.translate([width/2, height/2]);
 
 map.projection(projection);
@@ -168,11 +168,12 @@ const svg = d3.select("#carte")
 	.attr("height", "100%");
 
 
-const svglegend = d3.select("#box-legend")
+const svglegend = d3.select("#boite-outil")
 	.append("svg")
 	.attr("id", "svg2")
-	.attr("width", "100%")
-	.attr("height", "50%");
+	.attr("hidden", "true")
+	.attr("width", "180px")
+	.attr("height", "180px");
 
 /// Création de l'animation
 var play = false;
@@ -291,6 +292,21 @@ const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("
 var x = "h2021";
 
 function creation_stations(x){
+    
+	// Création des cercles proportionnels
+	var distribution = []
+	for (var i = 0; i < geojson_stations.features.length; i++) {
+		var val = geojson_stations.features[i].properties[x];
+		console.log(val)
+		if (isNaN(val)){
+			console.log("gagne")
+		}
+		distribution.push(val);
+	}
+	var diametre_min = 10
+	var valeur_min = Math.min.apply(Math, distribution.filter(function(n) { return !isNaN(n); }));
+	var valeur_max = Math.max.apply(Math, distribution.filter(function(n) { return !isNaN(n); }));
+	var valeur_moy = (valeur_max+valeur_min)/2;
 
 	stations.selectAll("circle")
 		.data(geojson_stations.features)
@@ -299,9 +315,10 @@ function creation_stations(x){
 		.attr("hmoy",d => (Math.round(100*d.properties[x])/100).toString())
 		.attr("cx", d => projection(d.geometry.coordinates)[0])
 		.attr("cy", d => projection(d.geometry.coordinates)[1])
-		.attr("r", r => 15*r.properties[x])
+		.attr("r", r => Math.round((diametre_min / 2) * Math.sqrt(r.properties[x] / valeur_min)))
 		.attr("fill-opacity", 0.8)
 		.attr("fill", "black")
+		.attr("stroke", "white")
 
 
 	stations.selectAll("circle")
@@ -309,7 +326,7 @@ function creation_stations(x){
 			var Nom = e.srcElement.getAttribute("Nom");
 			var hmoy = e.srcElement.getAttribute("hmoy");
 			e.srcElement.style.cursor = "pointer";
-			e.srcElement.setAttribute("fill","red");
+			e.srcElement.setAttribute("fill","white");
 			tooltip
 				.style("display", "block");
 			tooltip
@@ -324,33 +341,69 @@ function creation_stations(x){
 			d.srcElement.setAttribute("fill","black");
 		});
     
-	R1 = geojson_stations.features[0].properties["h2020"];
+	
+	var R2 = Math.round((diametre_min / 2) * Math.sqrt(valeur_moy / valeur_min));
+	var R1 = R2/2;
+	var R3 = 2*R2;
 	console.log(R1);
+	var groupe_legende = document.getElementById("dessin_legend")
+	while (groupe_legende.firstChild) {
+    	groupe_legende.removeChild(groupe_legende.lastChild);
+    }
 	legende_dessin
 		.append("circle")
-		.attr("cx", 70)
-		.attr("cy", 70)
-		.attr("r",15*R1)
+		.attr("cx", 90)
+		.attr("cy", 120)
+		.attr("r",R1)
 		.attr("fill-opacity", 0.5)
 		.attr("fill", "black")
-		.attr("stroke", "red");
-	legende_dessin
-		.append("circle")
-		.attr("cx", 70)
-		.attr("cy", 70-5*R1)
-		.attr("r",20*R1)
-		.attr("fill-opacity", 0.5)
-		.attr("fill", "black")
-		.attr("stroke", "red");
+		.attr("stroke", "white")
+	
+	legende_dessin.append("text")
+		.attr("x", 140)
+		.attr("y", 120)
+		.attr("font-size", "15px")
+		.text(R1.toString());
+	
+    if (R2<60){
+		legende_dessin
+			.append("circle")
+			.attr("cx", 90)
+			.attr("cy", 120-(R2-R1))
+			.attr("r", R2)
+			.attr("fill-opacity", 0.5)
+			.attr("fill", "black")
+			.attr("stroke", "white")
 
-	legende_dessin
-		.append("circle")
-		.attr("cx", 70)
-		.attr("cy", 70-15*R1)
-		.attr("r",30*R1)
-		.attr("fill-opacity", 0.5)
-		.attr("fill", "black")
-		.attr("stroke", "red");
+		legende_dessin.append("text")
+			.attr("x", 140)
+			.attr("y", 120-2*(R2-R1)-10)
+			.attr("font-size", "15px")
+			.text(R2.toString());
+	}
+	
+	if (R3<60){
+		legende_dessin
+			.append("circle")
+			.attr("cx", 90)
+			.attr("cy", 120-(R3-R1))
+			.attr("r",R3)
+			.attr("fill-opacity", 0.5)
+			.attr("fill", "black")
+			.attr("stroke", "white")
+
+		legende_dessin.append("text")
+			.attr("x", 140)
+			.attr("y", 120-2*(R3-R1)-10)
+			.attr("font-size", "15px")
+			.text(R3.toString());
+	}
+	legende_dessin.append("text")
+			.attr("x", 10)
+			.attr("y", 20)
+			.attr("font-size", "15px")
+			.text("Hauteur de neige (en m)");
+
 
 	
 }
@@ -375,14 +428,6 @@ $('#curseur').on('change', function(){
 	// Mise à jour du graphe 2
 	creation_graph(x);
 
-	//Mise à jour du graph1
-	// graph1.series[0].options.marker = 
-	// {
-	// 	fillColor: 'red',
-	// 	lineWidth: 2,
-	// 	lineColor: Highcharts.getOptions().colors[0]
-	// }
-	//graph1.update()
 
 });
 
@@ -481,7 +526,7 @@ chart: {
 },
 
 title: {
-	text: 'Hauteur moyenne de neige dans les sations savoyardes en février',
+	text: 'Hauteur moyenne de neige dans les stations savoyardes en février',
 	align: 'left'
 },
 
@@ -550,13 +595,30 @@ var display = false;
 $("#effet").click(function(){
 	if (!display){
 		display = !display;
-		$(".graph1").css("visibility", "visible");
+		document.getElementById("graph1").removeAttribute("hidden");
 		$("#effet").css("background-color", "rgba(150, 2, 12, 0.2)");
 	}
 	else{
 		display = !display;
-		$("#effet").css("background-color", "rgba(150, 150, 150, 0.559)")
-		$(".graph1").css("visibility", "hidden")
+		document.getElementById("graph1").setAttribute("hidden",true);
+		$("#effet").css("background-color", "rgba(150, 150, 150, 0.559)");
+	}
+	
+});
+
+// Afficher/masquer la légende
+var display_legende = false;
+
+$("#leg-view").click(function(){
+	if (!display_legende){
+		display_legende = !display_legende;
+		document.getElementById("svg2").removeAttribute("hidden");
+		$("#leg-view").text("▲ Légende");
+	}
+	else{
+		display_legende = !display_legende;
+		document.getElementById("svg2").setAttribute("hidden",true);
+		$("#leg-view").text("▼ Légende");
 	}
 	
 });
