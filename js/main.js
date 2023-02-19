@@ -300,10 +300,6 @@ function creation_stations(x){
 	var distribution = []
 	for (var i = 0; i < geojson_stations.features.length; i++) {
 		var val = geojson_stations.features[i].properties[x];
-		console.log(val)
-		if (isNaN(val)){
-			console.log("gagne")
-		}
 		distribution.push(val);
 	}
 	var diametre_min = 10
@@ -346,9 +342,9 @@ function creation_stations(x){
     
 	
 	var R2 = Math.round((diametre_min / 2) * Math.sqrt(valeur_moy / valeur_min));
+	var vm = 0.1*Math.round(valeur_moy*10);
 	var R1 = R2/2;
 	var R3 = 2*R2;
-	console.log(R1);
 	var groupe_legende = document.getElementById("dessin_legend")
 	while (groupe_legende.firstChild) {
     	groupe_legende.removeChild(groupe_legende.lastChild);
@@ -366,7 +362,7 @@ function creation_stations(x){
 		.attr("x", 140)
 		.attr("y", 120)
 		.attr("font-size", "15px")
-		.text(R1.toString());
+		.text((vm/2).toString());
 	
     if (R2<60){
 		legende_dessin
@@ -382,7 +378,7 @@ function creation_stations(x){
 			.attr("x", 140)
 			.attr("y", 120-2*(R2-R1)-10)
 			.attr("font-size", "15px")
-			.text(R2.toString());
+			.text(vm.toString());
 	}
 	
 	if (R3<60){
@@ -399,7 +395,7 @@ function creation_stations(x){
 			.attr("x", 140)
 			.attr("y", 120-2*(R3-R1)-10)
 			.attr("font-size", "15px")
-			.text(R3.toString());
+			.text((vm*2).toString());
 	}
 	legende_dessin.append("text")
 			.attr("x", 10)
@@ -621,7 +617,6 @@ var displaySource = false;
 $("#btn-source").click(function(){
 	if (!displaySource){
 		displaySource = !displaySource;
-		console.log(document.getElementById("source"));
 		document.getElementById("source").removeAttribute("hidden");
 		$("#btn-source").addClass("active");
 	}
@@ -638,7 +633,6 @@ var displayPol = false;
 $("#btn-pol").click(function(){
 	if (!displayPol){
 		displayPol = !displayPol;
-		console.log(document.getElementById("pol"));
 		document.getElementById("pol").removeAttribute("hidden");
 		$("#btn-pol").addClass("active");
 	}
@@ -654,7 +648,6 @@ var displayContact = false;
 $("#btn-contact").click(function(){
 	if (!displayContact){
 		displayContact = !displayContact;
-		console.log(document.getElementById("contact"));
 		document.getElementById("contact").removeAttribute("hidden");
 		$("#btn-contact").addClass("active");
 	}
@@ -670,7 +663,6 @@ var displayMention = false;
 $("#btn-mention").click(function(){
 	if (!displayMention){
 		displayMention = !displayMention;
-		console.log(document.getElementById("mention"));
 		document.getElementById("mention").removeAttribute("hidden");
 		$("#btn-mention").addClass("active");
 	}
