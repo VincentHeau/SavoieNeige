@@ -1,13 +1,13 @@
-/***************************************************************************/
-/************************************************ CREATION DE LA CARTE *****/
-/***************************************************************************/
+/************************************************************************************/
+/************************************************ CREATION DU GRAPH 2(vertical) *****/
+/************************************************************************************/
 
 
 
 ///  Création du graphique en bar
 var ctx = document.getElementById('myChart');
 
-
+// Création et mise à jour du graphe
 function creation_graph(x){
 
 	var dict = {};
@@ -95,7 +95,7 @@ function creation_graph(x){
 }
 
 function maj_graph(x,graph){
-
+    graph.options.plugins.title.text = 'Classement des stations savoyardes en '+x.slice(1,5);
 	var dict = {};
 	for (var i = 0; i < geojson_stations.features.length; i++) {
 		var key = geojson_stations.features[i].properties.Nom;
@@ -148,14 +148,18 @@ function maj_graph(x,graph){
 
 
 graph2 = creation_graph("h2022");
-maj_graph("h2000",graph2);
+maj_graph("h2022",graph2);
+
+
+/***************************************************************************/
+/************************************************ CREATION DE LA CARTE *****/
+/***************************************************************************/
 
 const map = d3.geoPath();
 
 const projection = d3.geoMercator()
 	.center([5.8, 46.3])
 	.scale(13000)
-	//.translate([width/2, height/2]);
 
 map.projection(projection);
 
@@ -190,9 +194,6 @@ $("#play").click(function() {
 		$("#curseur").val(1996);
 
 		// lancement de l'animation
-		// program to display a text using setInterval method
-		// program to stop the setInterval() method after five times
-
 		let annee = 1996;
 
 		var x = "h" + annee;
@@ -234,6 +235,7 @@ $("#play").click(function() {
 
   });
 
+
 /***************************************************************************/
 /*********************************** AJOUTER DES OBJETS SUR LES CARTES *****/
 /***************************************************************************/
@@ -262,7 +264,7 @@ svg.selectAll("image")
 	.attr("width", tiles.scale)
 	.attr("height", tiles.scale);
 
-// Ajout des départements
+// Ajout des départements de savoie et haute-savoie
 
 const depts = svg.append("g");
 
@@ -291,6 +293,7 @@ const legende_dessin = svglegend.append("g").attr("id", "dessin_legend");
 const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
 var x = "h2021";
 
+// Création des cercles proportionnels pour les stations
 function creation_stations(x){
     
 	// Création des cercles proportionnels
@@ -409,10 +412,8 @@ function creation_stations(x){
 }
 creation_stations("h2022");
 
-// Ajout d'un groupe (villes) au SVG (svg)
 
-
-// Au mouvement du curseur
+// Au mouvement du curseur (mise à jour des stations)
 $('#curseur').on('change', function(){
     
 	var annee = $('#curseur').val().toString();
@@ -431,6 +432,11 @@ $('#curseur').on('change', function(){
 
 });
 
+
+
+/***************************************************************************/
+/*********************************** GRAPH1 général sur toutes les stations*/
+/***************************************************************************/
 
 
 function calculateAverage(annee) {
@@ -464,23 +470,8 @@ function calculateMinMax(annee) {
 }
 
 
-const villes = svg.append("g");
 
-villes.selectAll("path")
-	// La variable geojson_villes est créée dans le fichier JS qui contient le GeoJSON
-	.data(geojson_villes.features)
-	.enter()
-	.append("path")
-	.attr("d", map)
-	// Sémiologie (par défaut) des objets
-	.style("fill", "#fff4d9")
-	.style("stroke-width", 0);
-
-// Ajout d'un groupe (roads) au SVG (svg)
-
-
-
-
+// Création du graph 1
 var ranges = create_averages();
 var averages = create_avg()
 
@@ -507,8 +498,6 @@ function create_averages(){
 	
 }
 
-console.log(create_avg());
-console.log(create_averages());
 
 var a = 1
 var graph1 = new Highcharts.chart('container', {
@@ -589,7 +578,11 @@ series: [{
 
 
 
-// Afficher/masquer le graph 2
+/***************************************************************************/
+/*********************************** Afficher masquer les éléments *********/
+/***************************************************************************/
+
+
 var display = false;
 
 $("#effet").click(function(){

@@ -186,17 +186,6 @@ body {
 
 
 
-  div.tooltip {
-	display:none;
-	position:absolute;
-	text-align:center;
-	color:rgb(0, 0, 0);
-	padding:5px;
-	font-size:11px;
-	background:rgba(0,0,0,0.3);
-	border-radius:4px;
-}
-
 .curseur {
 	width: 100%; /* Width of the outside container */
   }
@@ -230,8 +219,5 @@ body {
 	background: #0f58bf; 
 	cursor: pointer; /* Cursor on hover */
   }
-
-
-/* gestion bandeau haut */
 
 
