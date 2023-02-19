@@ -26,7 +26,6 @@ body {
 	grid-column: 1 / 4;
 	grid-row: 1 / 7;
 	overflow: hidden;
-	border: solid;
 }
 
 #choixmultiple{
@@ -35,6 +34,7 @@ body {
 	display: flex;
 	border: solid;
 }
+
 
 
 
@@ -121,6 +121,7 @@ body {
 	color: black;
 	font-size: 15px;
 	margin-top:10px;
+	margin-bottom: 10px;
 	font-weight: bold;
 	font-family: Bitter;
 }
@@ -233,4 +234,7 @@ body {
 	cursor: pointer; /* Cursor on hover */
   }
 
-  
+
+/* gestion bandeau haut */
+
+

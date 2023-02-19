@@ -560,3 +560,19 @@ $("#effet").click(function(){
 	}
 	
 });
+
+// Bouton - source
+var displaySource = false;
+$("#btn-source").click(function(){
+	if (!displaySource){
+		displaySource = !displaySource;
+		console.log(document.getElementById("source"));
+		document.getElementById("source").removeAttribute("hidden");
+		$("#btn-source").addClass("active");
+	}
+	else{
+		displaySource = !displaySource;
+		document.getElementById("source").setAttribute("hidden", true);
+		$("#btn-source").removeClass("active");
+	}
+});
