@@ -3,7 +3,7 @@
 _Ce site a été créé pour un projet de classe consistant à réaliser une cartographie dynamique via les outils de programmation web._
 
 ## Table des matières
-1. [Descriptif du site](##Descriptif du site)
+1. [Descriptif du site](##1)
 
 2. [Principales améliorations nécessaires](##3)
 
@@ -43,11 +43,15 @@ Afin de faire varier l'année, un slider est disponible en bas de page, posséda
 > La plupart des fonctionnalitées dont les implémentations ont été réfléchies en amont du projet ont réussi à être implémentées dans cette version finale. Nous pouvons cependant réfléchir à d'autres pistes d'améliorations qui font l'objet de cette partie.
 
 ### 2.1 Ajustement de la légende
-![Modifications nécessaires de la légende](/img/legende.png "Modifications nécessaires de la légende"| width=200)
+Pour voir la légende, il faut cliquer sur un bouton rouge qui permet de l'afficher, puis ensuite de la masquer. Lorsque celle-ci est affichée, elle se construit à partir de la librairie D3 dans un svg de taille 180 px sur 180px. Les cercles construits à l'intérieur sont placés par rapport à ces dimensions.
+
+Pour construire les trois cercles, on récupère la valeur moyenne
+
+![Modifications nécessaires de la légende](/img/legende.png "Modifications nécessaires de la légende")
 ### 2.2 Design du graphique en barres verticales
 
 ### 2.3 Graphique général
-![Connection du graphique au mouvement du temps](/img/suivi.png "Connection du graphique au mouvement du temps" | width=200)
+![Connection du graphique au mouvement du temps](/img/suivi.png "Connection du graphique au mouvement du temps")
 ### 2.4 Autres possibilités envisagées pour compléter le site
 
 ### 2.5 Amélioration du css
